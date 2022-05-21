@@ -26,8 +26,8 @@ object Applicative {
 }
 
 class ApplicativeOps[M[_], A](ma: M[A])(implicit a: Applicative[M]) {
-  def ~>[B](mb: M[B]): M[B]      = a(a(a.pure(((_: A) => (b: B) => b): A => B => B), ma), mb)
-  def <~[B](mb: M[B]): M[A]      = a(a(a.pure(((a: A) => (_: B) => a): A => B => A), ma), mb)
+  def ~>[B](mb: M[B]): M[B]      = a(a(a.pure(((_: A) => (b: B) => b): (A => B => B)), ma), mb)
+  def <~[B](mb: M[B]): M[A]      = a(a(a.pure(((a: A) => (_: B) => a): (A => B => A)), ma), mb)
   def andKeep[B](mb: M[B]): M[B] = ~>(mb)
   def keepAnd[B](mb: M[B]): M[A] = <~(mb)
 
